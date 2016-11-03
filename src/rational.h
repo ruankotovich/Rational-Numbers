@@ -7,6 +7,7 @@ typedef TRational* (*FRationalSum)(TRational*,TRational*);
 typedef TRational* (*FRationalSub)(TRational*,TRational*);
 typedef TRational* (*FRationalDiv)(TRational*,TRational*);
 typedef TRational* (*FRationalMul)(TRational*,TRational*);
+typedef double (*FRationalToDouble)(TRational*);
 typedef void (*FRationalPrint)(TRational*);
 
 typedef struct t_rational{
@@ -17,6 +18,7 @@ typedef struct t_rational{
   FRationalSub rationalSub;
   FRationalDiv rationalDiv;
   FRationalMul rationalMul;
+  FRationalToDouble rationalToDouble;
   FRationalPrint rationalPrint;
 
 }TRational;
