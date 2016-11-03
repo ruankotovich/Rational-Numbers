@@ -7,7 +7,7 @@ typedef struct{
   int denominator;
 }TRationalData;
 
-static int af_gcd(int bigger, int lower){
+static int private_f_gcd(int bigger, int lower){
   int rest;
 
   do{
@@ -24,24 +24,24 @@ static int af_gcd(int bigger, int lower){
   return 1;
 }
 
-static void f_rationalPrint(TRational *rational){
-  TRationalData *data = rational->data;
-  printf("%d/%d\n", data->numerator,data->denominator);
-}
-
-static void af_rationalize(TRational *rational){
+static void private_f_rationalize(TRational *rational){
   TRationalData *data = rational->data;
   int numerator = data->numerator, denominator = data->denominator;
   int gcd;
 
   do{
-    gcd = numerator > denominator? af_gcd(numerator, denominator) : af_gcd(denominator, numerator);
+    gcd = numerator > denominator? private_f_gcd(numerator, denominator) : private_f_gcd(denominator, numerator);
     numerator = numerator/gcd;
     denominator = denominator/gcd;
   }while(gcd != 1);
 
   data->denominator = denominator;
   data->numerator = numerator;
+}
+
+static void f_rationalPrint(TRational *rational){
+  TRationalData *data = rational->data;
+  printf("%d/%d\n", data->numerator,data->denominator);
 }
 
 static TRational* f_multiplication(TRational*  r1,TRational* r2){
@@ -68,6 +68,11 @@ static TRational* f_sub(TRational* r1, TRational* r2){
   return new_rational(r2Data->denominator * r1Data->numerator - r1Data->denominator * r2Data->numerator, r1Data->denominator * r2Data->denominator);
 }
 
+static double f_toDouble(TRational* r1){
+  TRationalData *data = r1->data;
+  return ((double)data->numerator) / ((double)data->denominator);
+}
+
 TRational *new_rational(int numerator, int denominator){
   TRational *newo = malloc(sizeof(TRational));
   TRationalData *newoData = malloc(sizeof(TRationalData));
@@ -81,8 +86,9 @@ TRational *new_rational(int numerator, int denominator){
   newo->rationalMul = f_multiplication;
   newo->rationalSum = f_sum;
   newo->rationalSub = f_sub;
+  newo->rationalToDouble = f_toDouble;
 
-  af_rationalize(newo);
+  private_f_rationalize(newo);
 
   return newo;
 }
