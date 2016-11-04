@@ -40,6 +40,16 @@ static void private_f_rationalize(TRational *rational){
   data->numerator = numerator;
 }
 
+static int f_getNumerator(TRational* r1){
+  TRationalData *data = r1->data;
+  return data->numerator;
+}
+
+static int f_getDenominator(TRational* r1){
+  TRationalData *data = r1->data;
+  return data->denominator;
+}
+
 static void f_rationalPrint(TRational *rational){
   TRationalData *data = rational->data;
   printf("%d/%d\n", data->numerator,data->denominator);
@@ -93,6 +103,8 @@ TRational *new_rational(int numerator, int denominator){
   newoData->numerator = numerator;
 
   newo->print = f_rationalPrint;
+  newo->getNumerator = f_getNumerator;
+  newo->getDenominator = f_getDenominator;
   newo->div = f_division;
   newo->mul = f_multiplication;
   newo->sum = f_sum;

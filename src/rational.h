@@ -3,6 +3,8 @@
 
 typedef struct t_rational TRational;
 
+typedef int (*FRationalGetNumerator)(TRational*);
+typedef int (*FRationalGetDenominator)(TRational*);
 typedef TRational* (*FRationalSum)(TRational*,TRational*);
 typedef TRational* (*FRationalSub)(TRational*,TRational*);
 typedef TRational* (*FRationalDiv)(TRational*,TRational*);
@@ -16,6 +18,8 @@ typedef struct t_rational{
 
   void *data;
 
+  FRationalGetNumerator getNumerator;
+  FRationalGetDenominator getDenominator;
   FRationalSum sum;
   FRationalSub sub;
   FRationalDiv div;
