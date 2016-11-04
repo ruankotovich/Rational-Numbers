@@ -1,6 +1,7 @@
 #include "rational.h"
 #include "stdlib.h"
 #include "stdio.h"
+#include "math.h"
 
 typedef struct{
   int numerator;
@@ -73,6 +74,16 @@ static double f_toDouble(TRational* r1){
   return ((double)data->numerator) / ((double)data->denominator);
 }
 
+static int f_ceil(TRational*r1 ){
+  double value = f_toDouble(r1);
+  return ceil(value);
+}
+
+static int f_floor(TRational*r1 ){
+  double value = f_toDouble(r1);
+  return floor(value);
+}
+
 TRational *new_rational(int numerator, int denominator){
   TRational *newo = malloc(sizeof(TRational));
   TRationalData *newoData = malloc(sizeof(TRationalData));
@@ -81,12 +92,14 @@ TRational *new_rational(int numerator, int denominator){
   newoData->denominator = denominator;
   newoData->numerator = numerator;
 
-  newo->rationalPrint = f_rationalPrint;
-  newo->rationalDiv = f_division;
-  newo->rationalMul = f_multiplication;
-  newo->rationalSum = f_sum;
-  newo->rationalSub = f_sub;
-  newo->rationalToDouble = f_toDouble;
+  newo->print = f_rationalPrint;
+  newo->div = f_division;
+  newo->mul = f_multiplication;
+  newo->sum = f_sum;
+  newo->sub = f_sub;
+  newo->toDouble = f_toDouble;
+  newo->ceil = f_ceil;
+  newo->floor = f_floor;
 
   private_f_rationalize(newo);
 

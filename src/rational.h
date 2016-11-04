@@ -8,18 +8,22 @@ typedef TRational* (*FRationalSub)(TRational*,TRational*);
 typedef TRational* (*FRationalDiv)(TRational*,TRational*);
 typedef TRational* (*FRationalMul)(TRational*,TRational*);
 typedef double (*FRationalToDouble)(TRational*);
+typedef int (*FRationalFloor)(TRational*);
+typedef int (*FRationalCeil)(TRational*);
 typedef void (*FRationalPrint)(TRational*);
 
 typedef struct t_rational{
 
   void *data;
 
-  FRationalSum rationalSum;
-  FRationalSub rationalSub;
-  FRationalDiv rationalDiv;
-  FRationalMul rationalMul;
-  FRationalToDouble rationalToDouble;
-  FRationalPrint rationalPrint;
+  FRationalSum sum;
+  FRationalSub sub;
+  FRationalDiv div;
+  FRationalMul mul;
+  FRationalToDouble toDouble;
+  FRationalPrint print;
+  FRationalCeil ceil;
+  FRationalFloor floor;
 
 }TRational;
 
