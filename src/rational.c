@@ -13,14 +13,14 @@ static int private_f_gcd(int bigger, int lower){
 
   do{
     rest = bigger % lower;
-
-    if (!rest){
+    if (rest == 0){
       return lower;
     }
 
     bigger = lower;
     lower = rest;
-  }while(!rest);
+
+  }while(rest != 0);
 
   return 1;
 }
@@ -69,18 +69,18 @@ static TRational* f_sub(TRational* r1, TRational* r2){
   return new_rational(r2Data->denominator * r1Data->numerator - r1Data->denominator * r2Data->numerator, r1Data->denominator * r2Data->denominator);
 }
 
-static double f_toDouble(TRational* r1){
+static float f_toFloat(TRational* r1){
   TRationalData *data = r1->data;
   return ((double)data->numerator) / ((double)data->denominator);
 }
 
 static int f_ceil(TRational*r1 ){
-  double value = f_toDouble(r1);
+  float value = f_toFloat(r1);
   return ceil(value);
 }
 
 static int f_floor(TRational*r1 ){
-  double value = f_toDouble(r1);
+  double value = f_toFloat(r1);
   return floor(value);
 }
 
@@ -97,11 +97,24 @@ TRational *new_rational(int numerator, int denominator){
   newo->mul = f_multiplication;
   newo->sum = f_sum;
   newo->sub = f_sub;
-  newo->toDouble = f_toDouble;
+  newo->toFloat = f_toFloat;
   newo->ceil = f_ceil;
   newo->floor = f_floor;
 
   private_f_rationalize(newo);
 
   return newo;
+}
+
+TRational* new_rationalFromFloat(float no){
+  int moveds = 0;
+  int integerNo = floor(no);
+
+  while(fmod(no,integerNo) != 0){
+    moveds++;
+    no*=10;
+    integerNo = floor(no);
+  }
+
+  return new_rational(integerNo, moveds>0? (int)pow(10,moveds) :1);
 }

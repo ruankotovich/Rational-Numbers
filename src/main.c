@@ -2,9 +2,8 @@
 #include "rational.h"
 
 int main(int argc, char **argv){
-  TRational *two = new_rational(3, 5);
-  double value = two->rationalToDouble(two);
-  printf("%.2lf",value);
+  TRational* rat = new_rationalFromFloat(3.533232);
+  rat->print(rat);
 
   return 0;
 }
