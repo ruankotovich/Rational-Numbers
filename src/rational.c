@@ -1,4 +1,4 @@
-#include "rational.h"
+#include "../include/rational.h"
 #include "stdlib.h"
 #include "stdio.h"
 #include "math.h"
@@ -79,18 +79,18 @@ static TRational* f_sub(TRational* r1, TRational* r2){
   return new_rational(r2Data->denominator * r1Data->numerator - r1Data->denominator * r2Data->numerator, r1Data->denominator * r2Data->denominator);
 }
 
-static float f_toFloat(TRational* r1){
+static double f_toDouble(TRational* r1){
   TRationalData *data = r1->data;
   return ((double)data->numerator) / ((double)data->denominator);
 }
 
 static int f_ceil(TRational*r1 ){
-  float value = f_toFloat(r1);
+  double value = f_toDouble(r1);
   return ceil(value);
 }
 
 static int f_floor(TRational*r1 ){
-  double value = f_toFloat(r1);
+  double value = f_toDouble(r1);
   return floor(value);
 }
 
@@ -109,7 +109,7 @@ TRational *new_rational(int numerator, int denominator){
   newo->mul = f_multiplication;
   newo->sum = f_sum;
   newo->sub = f_sub;
-  newo->toFloat = f_toFloat;
+  newo->toDouble = f_toDouble;
   newo->ceil = f_ceil;
   newo->floor = f_floor;
 

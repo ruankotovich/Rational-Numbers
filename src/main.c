@@ -1,8 +1,11 @@
 #include "stdio.h"
-#include "rational.h"
+#include "../include/rational.h"
 
 int main(int argc, char **argv){
-  TRational* rat = new_rationalFromFloat(23.45);
+  float no;
+  printf("Set float no. -> ");
+  scanf("%f",&no);
+  TRational* rat = new_rationalFromFloat(no);
   rat->print(rat);
 
   return 0;
